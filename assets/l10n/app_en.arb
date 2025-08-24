@@ -1,0 +1,582 @@
+{
+  "@@locale": "en",
+  "appTitle": "عين الحياه",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  
+  "aiPoweredEyeDiagnosis": "AI-Powered Eye Diagnosis",
+  "@aiPoweredEyeDiagnosis": {
+    "description": "Badge text for AI-powered diagnosis"
+  },
+  
+  "smartEyeDiagnosis": "Smart Eye Diagnosis",
+  "@smartEyeDiagnosis": {
+    "description": "Main heading for smart eye diagnosis"
+  },
+  
+  "aiTechnology": "AI Technology",
+  "@aiTechnology": {
+    "description": "AI technology text in heading"
+  },
+  
+  "heroDescription": "Advanced AI models for retinal analysis and eye health assessment. Get instant, accurate eye diagnosis through our cutting-edge technology.",
+  "@heroDescription": {
+    "description": "Main description text on hero section"
+  },
+  
+  "startFreeDiagnosis": "Start Free Diagnosis",
+  "@startFreeDiagnosis": {
+    "description": "Button text to start diagnosis"
+  },
+  
+  "learnMore": "Learn More",
+  "@learnMore": {
+    "description": "Button text to learn more"
+  },
+  
+  "aiModels": "2 AI Models",
+  "@aiModels": {
+    "description": "Feature text for AI models"
+  },
+  
+  "retinalSelfie": "Retinal & Selfie",
+  "@retinalSelfie": {
+    "description": "Feature subtitle for AI models"
+  },
+  
+  "hipaaCompliant": "HIPAA Compliant",
+  "@hipaaCompliant": {
+    "description": "Feature text for HIPAA compliance"
+  },
+  
+  "securePrivate": "Secure & Private",
+  "@securePrivate": {
+    "description": "Feature subtitle for security"
+  },
+  
+  "aiPoweredDiagnosisModels": "AI-Powered Diagnosis Models",
+  "@aiPoweredDiagnosisModels": {
+    "description": "Section title for AI models"
+  },
+  
+  "chooseFromAdvancedModels": "Choose from our advanced AI models for comprehensive eye health analysis",
+  "@chooseFromAdvancedModels": {
+    "description": "Section description for AI models"
+  },
+  
+  "retinalLens": "Retinal Lens",
+  "@retinalLens": {
+    "description": "Title for retinal lens model"
+  },
+  
+  "selfieCloseUp": "Selfie Close Up to Eye",
+  "@selfieCloseUp": {
+    "description": "Title for selfie close up model"
+  },
+  
+  "retinalLensDescription": "Professional retinal lens imaging for comprehensive eye diagnosis",
+  "@retinalLensDescription": {
+    "description": "Description for retinal lens model"
+  },
+  
+  "selfieCloseUpDescription": "Smartphone-friendly close-up eye screening for quick health assessment",
+  "@selfieCloseUpDescription": {
+    "description": "Description for selfie close up model"
+  },
+  
+  "accuracy": "Accuracy",
+  "@accuracy": {
+    "description": "Label for accuracy stat"
+  },
+  
+  "analysisTime": "Analysis Time",
+  "@analysisTime": {
+    "description": "Label for analysis time stat"
+  },
+  
+  "imageType": "Image Type",
+  "@imageType": {
+    "description": "Label for image type stat"
+  },
+  
+  "retinalAccuracy": "98.7%",
+  "@retinalAccuracy": {
+    "description": "Accuracy value for retinal analysis"
+  },
+  
+  "selfieAccuracy": "94.2%",
+  "@selfieAccuracy": {
+    "description": "Accuracy value for selfie analysis"
+  },
+  
+  "retinalTime": "30-45 seconds",
+  "@retinalTime": {
+    "description": "Analysis time for retinal"
+  },
+  
+  "selfieTime": "15-20 seconds",
+  "@selfieTime": {
+    "description": "Analysis time for selfie"
+  },
+  
+  "retinalPhoto": "Retinal Photo",
+  "@retinalPhoto": {
+    "description": "Image type for retinal"
+  },
+  
+  "closeUpSelfie": "Close-up Selfie",
+  "@closeUpSelfie": {
+    "description": "Image type for selfie"
+  },
+  
+  "tryRetinalLens": "Try Retinal Lens",
+  "@tryRetinalLens": {
+    "description": "Button text for retinal lens model"
+  },
+  
+  "trySelfieCloseUp": "Try Selfie Close Up",
+  "@trySelfieCloseUp": {
+    "description": "Button text for selfie close up model"
+  },
+  
+  "startAnalysis": "Start Analysis",
+  "@startAnalysis": {
+    "description": "Button text to start analysis"
+  },
+  
+  "selectRetinalModel": "Select Retinal Model",
+  "@selectRetinalModel": {
+    "description": "Button text to select retinal model"
+  },
+  
+  "selectExternalModel": "Select External Model",
+  "@selectExternalModel": {
+    "description": "Button text to select external model"
+  },
+  
+  "highAccuracy": "High Accuracy",
+  "@highAccuracy": {
+    "description": "High accuracy label"
+  },
+  
+  "fastResults": "Fast Results",
+  "@fastResults": {
+    "description": "Fast results label"
+  },
+  
+  "multipleConditions": "Multiple Conditions",
+  "@multipleConditions": {
+    "description": "Multiple conditions label"
+  },
+  
+  "language": "Language",
+  "@language": {
+    "description": "Language setting label"
+  },
+  
+  "arabic": "العربية",
+  "@arabic": {
+    "description": "Arabic language name"
+  },
+  
+  "english": "English",
+  "@english": {
+    "description": "English language name"
+  },
+  
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings title"
+  },
+  
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme setting label"
+  },
+  
+  "light": "Light",
+  "@light": {
+    "description": "Light theme option"
+  },
+  
+  "dark": "Dark",
+  "@dark": {
+    "description": "Dark theme option"
+  },
+  
+  "system": "System",
+  "@system": {
+    "description": "System theme option"
+  },
+  
+  "diagnosis": "Diagnosis",
+  "@diagnosis": {
+    "description": "Diagnosis navigation item"
+  },
+  
+  "chat": "Chat",
+  "@chat": {
+    "description": "Chat navigation item"
+  },
+  
+  "doctors": "Doctors",
+  "@doctors": {
+    "description": "Doctors navigation item"
+  },
+  
+  "findEyeCareSpecialists": "Find Eye Care Specialists",
+  "@findEyeCareSpecialists": {
+    "description": "Title for doctors screen"
+  },
+  
+  "connectWithQualifiedOphthalmologists": "Connect with qualified ophthalmologists and eye care professionals in your area. Schedule appointments and get expert care for your eye health.",
+  "@connectWithQualifiedOphthalmologists": {
+    "description": "Description for doctors screen"
+  },
+  
+  "searchByNameOrSpecialty": "Search by name or specialty...",
+  "@searchByNameOrSpecialty": {
+    "description": "Search field placeholder for doctors"
+  },
+  
+  "locationOrZipCode": "Location or ZIP code...",
+  "@locationOrZipCode": {
+    "description": "Location field placeholder"
+  },
+  
+  "filterResults": "Filter Results",
+  "@filterResults": {
+    "description": "Filter results button"
+  },
+  
+  "loadMoreDoctors": "Load More Doctors",
+  "@loadMoreDoctors": {
+    "description": "Load more doctors button"
+  },
+  
+  "bookAppointment": "Book Appointment",
+  "@bookAppointment": {
+    "description": "Book appointment button"
+  },
+  
+  "viewProfile": "View Profile",
+  "@viewProfile": {
+    "description": "View profile button"
+  },
+  
+  "reviews": "reviews",
+  "@reviews": {
+    "description": "Reviews text"
+  },
+  
+  "miles": "miles",
+  "@miles": {
+    "description": "Miles text"
+  },
+  
+  "availableToday": "Available Today",
+  "@availableToday": {
+    "description": "Available today text"
+  },
+  
+  "nextAvailableTomorrow": "Next Available: Tomorrow",
+  "@nextAvailableTomorrow": {
+    "description": "Next available tomorrow text"
+  },
+  
+  "aiEyeHealthAssistant": "AI Eye Health Assistant",
+  "@aiEyeHealthAssistant": {
+    "description": "AI Eye Health Assistant title"
+  },
+  
+  "getInstantAnswers": "Get instant answers to your eye health questions with voice support",
+  "@getInstantAnswers": {
+    "description": "Get instant answers description"
+  },
+  
+  "eyePain": "Eye pain",
+  "@eyePain": {
+    "description": "Eye pain text"
+  },
+  
+  "blurredVision": "Blurred vision",
+  "@blurredVision": {
+    "description": "Blurred vision text"
+  },
+  
+  "redEyes": "Red eyes",
+  "@redEyes": {
+    "description": "Red eyes text"
+  },
+  
+  "headaches": "Headaches",
+  "@headaches": {
+    "description": "Headaches text"
+  },
+  
+  "startConversation": "Start a conversation about your eye health",
+  "@startConversation": {
+    "description": "Start conversation text"
+  },
+  
+  "stopRecording": "Stop recording",
+  "@stopRecording": {
+    "description": "Stop recording text"
+  },
+  
+  "startVoiceInput": "Start voice input",
+  "@startVoiceInput": {
+    "description": "Start voice input text"
+  },
+  
+  "sendMessage": "Send message",
+  "@sendMessage": {
+    "description": "Send message text"
+  },
+  
+  "pleaseSelectImageAndModel": "Please select an image and model first",
+  "@pleaseSelectImageAndModel": {
+    "description": "Please select image and model error message"
+  },
+  
+  "diabeticRetinopathy": "Diabetic Retinopathy",
+  "@diabeticRetinopathy": {
+    "description": "Diabetic retinopathy condition"
+  },
+  
+  "hypertensiveRetinopathy": "Hypertensive Retinopathy",
+  "@hypertensiveRetinopathy": {
+    "description": "Hypertensive retinopathy condition"
+  },
+  
+  "ageRelatedMacularDegeneration": "Age-related Macular Degeneration",
+  "@ageRelatedMacularDegeneration": {
+    "description": "Age-related macular degeneration condition"
+  },
+  
+  "glaucoma": "Glaucoma",
+  "@glaucoma": {
+    "description": "Glaucoma condition"
+  },
+  
+  "retinalDetachment": "Retinal Detachment",
+  "@retinalDetachment": {
+    "description": "Retinal detachment condition"
+  },
+  
+  "macularEdema": "Macular Edema",
+  "@macularEdema": {
+    "description": "Macular edema condition"
+  },
+  
+  "retinalVeinOcclusion": "Retinal Vein Occlusion",
+  "@retinalVeinOcclusion": {
+    "description": "Retinal vein occlusion condition"
+  },
+  
+  "normalRetina": "Normal Retina",
+  "@normalRetina": {
+    "description": "Normal retina condition"
+  },
+  
+  "conjunctivitis": "Conjunctivitis",
+  "@conjunctivitis": {
+    "description": "Conjunctivitis condition"
+  },
+  
+  "dryEyeSyndrome": "Dry Eye Syndrome",
+  "@dryEyeSyndrome": {
+    "description": "Dry eye syndrome condition"
+  },
+  
+  "blepharitis": "Blepharitis",
+  "@blepharitis": {
+    "description": "Blepharitis condition"
+  },
+  
+  "cornealAbrasion": "Corneal Abrasion",
+  "@cornealAbrasion": {
+    "description": "Corneal abrasion condition"
+  },
+  
+  "pterygium": "Pterygium",
+  "@pterygium": {
+    "description": "Pterygium condition"
+  },
+  
+  "cataract": "Cataract",
+  "@cataract": {
+    "description": "Cataract condition"
+  },
+  
+  "normalExternalEye": "Normal External Eye",
+  "@normalExternalEye": {
+    "description": "Normal external eye condition"
+  },
+  
+  "high": "High",
+  "@high": {
+    "description": "High severity"
+  },
+  
+  "medium": "Medium",
+  "@medium": {
+    "description": "Medium severity"
+  },
+  
+  "low": "Low",
+  "@low": {
+    "description": "Low severity"
+  },
+  
+  "normal": "Normal",
+  "@normal": {
+    "description": "Normal severity"
+  },
+  
+  "ophthalmologist": "Ophthalmologist",
+  "@ophthalmologist": {
+    "description": "Ophthalmologist specialty"
+  },
+  
+  "retinalSpecialist": "Retinal Specialist",
+  "@retinalSpecialist": {
+    "description": "Retinal specialist"
+  },
+  
+  "cornealSpecialist": "Corneal Specialist",
+  "@cornealSpecialist": {
+    "description": "Corneal specialist"
+  },
+  
+  "retinalDisorders": "Retinal Disorders",
+  "@retinalDisorders": {
+    "description": "Retinal disorders specialty"
+  },
+  
+  "diabeticEyeCare": "Diabetic Eye Care",
+  "@diabeticEyeCare": {
+    "description": "Diabetic eye care specialty"
+  },
+  
+  "macularDegeneration": "Macular Degeneration",
+  "@macularDegeneration": {
+    "description": "Macular degeneration specialty"
+  },
+  
+  "cornealTransplant": "Corneal Transplant",
+  "@cornealTransplant": {
+    "description": "Corneal transplant specialty"
+  },
+  
+  "dryEyeTreatment": "Dry Eye Treatment",
+  "@dryEyeTreatment": {
+    "description": "Dry eye treatment specialty"
+  },
+  
+  "keratoconus": "Keratoconus",
+  "@keratoconus": {
+    "description": "Keratoconus specialty"
+  },
+  
+  "typeYourEyeHealthQuestion": "Type your eye health question...",
+  "@typeYourEyeHealthQuestion": {
+    "description": "Chat input placeholder text"
+  },
+
+  "aboutAppTitle": "About the App",
+  "@aboutAppTitle": {
+    "description": "Title for the read me / about dialog"
+  },
+
+  "readMeContent": "This application uses AI technology to analyze eye images for early detection of eye diseases.\nYou can choose between Retinal Analysis or Selfie Analysis depending on what’s available.\n\nTypes of Analysis\n🔵 Retinal Analysis\n\nRequires professional retinal images from medical devices\n\n🟡 Selfie Analysis\n\nUses a close-up selfie of the eye with a smartphone camera\n\nFeatures\n\n⚡ Fast and accurate results\n\n📱 Easy to use on any smartphone\n\n🗺️ Find nearby doctors using the integrated map\n\n🔒 Full privacy for your images and data\n\nImportant Notes\n\nThis app is a supportive tool and does not replace a medical diagnosis.\n\nIf symptoms persist or abnormal results appear, please consult an eye specialist.\n\nOur Goal\nTo raise health awareness and enable early detection of eye diseases through AI technology.",
+  "@readMeContent": {
+    "description": "Full Read Me content in English for the dialog"
+  },
+
+  "close": "Close",
+  "@close": {
+    "description": "Close button label for dialogs"
+  },
+  
+  "theAppFeatures": "App Features",
+  "@theAppFeatures": {
+    "description": "Title for app features section"
+  },
+  
+  "aiPoweredChat": "AI-Powered Chat",
+  "@aiPoweredChat": {
+    "description": "AI powered chat feature"
+  },
+  
+  "voiceAssistant": "Voice Assistant",
+  "@voiceAssistant": {
+    "description": "Voice assistant feature"
+  },
+  
+  "findDoctors": "Find Doctors",
+  "@findDoctors": {
+    "description": "Find doctors feature"
+  },
+  
+  "nearbyLocations": "Nearby Locations",
+  "@nearbyLocations": {
+    "description": "Nearby locations feature"
+  },
+  
+  "instantDiagnosis": "Instant Diagnosis",
+  "@instantDiagnosis": {
+    "description": "Instant diagnosis feature"
+  },
+  
+  "aiAnalysis": "AI Analysis",
+  "@aiAnalysis": {
+    "description": "AI analysis feature"
+  },
+  
+  "multiLanguage": "Multi-Language",
+  "@multiLanguage": {
+    "description": "Multi language support"
+  },
+  
+  "arabicEnglish": "Arabic & English",
+  "@arabicEnglish": {
+    "description": "Arabic and English support"
+  },
+  
+  "recordingVoiceNote": "Recording voice note...",
+  "@recordingVoiceNote": {
+    "description": "Recording voice note indicator text"
+  },
+  
+  "tapToStop": "Tap to stop",
+  "@tapToStop": {
+    "description": "Tap to stop recording text"
+  },
+  
+  "voiceNote": "Voice Note",
+  "@voiceNote": {
+    "description": "Voice note label"
+  },
+  
+  "tapToPlay": "Tap to play",
+  "@tapToPlay": {
+    "description": "Tap to play voice note text"
+  },
+  
+  "speechNotClear": "I heard you, but your message wasn't clear enough. Could you please repeat your eye health question more slowly and clearly?",
+  "@speechNotClear": {
+    "description": "Message when speech is not clear"
+  },
+  
+  "couldNotUnderstand": "I couldn't understand what you said. Please try speaking more clearly or repeat your message.",
+  "@couldNotUnderstand": {
+    "description": "Message when speech couldn't be understood"
+  },
+  
+  "voiceProcessingError": "Sorry, I'm having trouble processing your voice message. Please try typing your question instead.",
+  "@voiceProcessingError": {
+    "description": "Error message for voice processing issues"
+  }
+}
