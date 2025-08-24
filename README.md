@@ -9,7 +9,6 @@ A modern Flutter application for AI-powered eye diagnosis and health assistance.
 - **AI Health Assistant**: Chat with an intelligent assistant for eye health questions
 - **Voice Support**: Speech-to-text and text-to-speech capabilities
 - **Responsive Design**: Works seamlessly on mobile, tablet, and desktop
-- **Dark/Light Theme**: Automatic theme switching based on system preferences
 
 ## Screenshots
 
