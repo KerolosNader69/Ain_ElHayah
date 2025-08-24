@@ -157,9 +157,6 @@ Uses GoRouter for declarative routing with:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
-
-For support, email support@eyewiseconnect.com or create an issue in the repository.
 
 ## Acknowledgments
 
