@@ -1,0 +1,582 @@
+{
+  "@@locale": "ar",
+  "appTitle": "EyeCloud",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  
+  "aiPoweredEyeDiagnosis": "تشخيص العين بالذكاء الاصطناعي",
+  "@aiPoweredEyeDiagnosis": {
+    "description": "Badge text for AI-powered diagnosis"
+  },
+  
+  "smartEyeDiagnosis": "تشخيص العين الذكي",
+  "@smartEyeDiagnosis": {
+    "description": "Main heading for smart eye diagnosis"
+  },
+  
+  "aiTechnology": "تقنية الذكاء الاصطناعي",
+  "@aiTechnology": {
+    "description": "AI technology text in heading"
+  },
+  
+  "heroDescription": "نماذج ذكاء اصطناعي متقدمة لتحليل الشبكية وتقييم صحة العين من خلال تقنيتنا المتطورة.",
+  "@heroDescription": {
+    "description": "Main description text on hero section"
+  },
+  
+  "startFreeDiagnosis": "ابدأ التشخيص المجاني",
+  "@startFreeDiagnosis": {
+    "description": "Button text to start diagnosis"
+  },
+  
+  "learnMore": "اعرف المزيد",
+  "@learnMore": {
+    "description": "Button text to learn more"
+  },
+  
+  "aiModels": "نموذجان للذكاء الاصطناعي",
+  "@aiModels": {
+    "description": "Feature text for AI models"
+  },
+  
+  "retinalSelfie": "الشبكية والسيلفي",
+  "@retinalSelfie": {
+    "description": "Feature subtitle for AI models"
+  },
+  
+  "hipaaCompliant": "متوافق مع HIPAA",
+  "@hipaaCompliant": {
+    "description": "Feature text for HIPAA compliance"
+  },
+  
+  "securePrivate": "آمن وخاص",
+  "@securePrivate": {
+    "description": "Feature subtitle for security"
+  },
+  
+  "aiPoweredDiagnosisModels": "نماذج التشخيص بالذكاء الاصطناعي",
+  "@aiPoweredDiagnosisModels": {
+    "description": "Section title for AI models"
+  },
+  
+  "chooseFromAdvancedModels": "اختر من نماذج الذكاء الاصطناعي المتقدمة لتحليل شامل لصحة العين",
+  "@chooseFromAdvancedModels": {
+    "description": "Section description for AI models"
+  },
+  
+  "retinalLens": "عدسة الشبكية",
+  "@retinalLens": {
+    "description": "Title for retinal lens model"
+  },
+  
+  "selfieCloseUp": "سيلفي مقرب للعين",
+  "@selfieCloseUp": {
+    "description": "Title for selfie close up model"
+  },
+  
+  "retinalLensDescription": "تصوير احترافي لعدسة الشبكية للتشخيص الشامل للعين",
+  "@retinalLensDescription": {
+    "description": "Description for retinal lens model"
+  },
+  
+  "selfieCloseUpDescription": "فحص مقرب للعين مناسب للهاتف الذكي للتقييم السريع للصحة",
+  "@selfieCloseUpDescription": {
+    "description": "Description for selfie close up model"
+  },
+  
+  "accuracy": "الدقة",
+  "@accuracy": {
+    "description": "Label for accuracy stat"
+  },
+  
+  "analysisTime": "وقت التحليل",
+  "@analysisTime": {
+    "description": "Label for analysis time stat"
+  },
+  
+  "imageType": "نوع الصورة",
+  "@imageType": {
+    "description": "Label for image type stat"
+  },
+  
+  "retinalAccuracy": "98.7%",
+  "@retinalAccuracy": {
+    "description": "Accuracy value for retinal analysis"
+  },
+  
+  "selfieAccuracy": "94.2%",
+  "@selfieAccuracy": {
+    "description": "Accuracy value for selfie analysis"
+  },
+  
+  "retinalTime": "30-45 ثانية",
+  "@retinalTime": {
+    "description": "Analysis time for retinal"
+  },
+  
+  "selfieTime": "15-20 ثانية",
+  "@selfieTime": {
+    "description": "Analysis time for selfie"
+  },
+  
+  "retinalPhoto": "صورة الشبكية",
+  "@retinalPhoto": {
+    "description": "Image type for retinal"
+  },
+  
+  "closeUpSelfie": "سيلفي مقرب",
+  "@closeUpSelfie": {
+    "description": "Image type for selfie"
+  },
+  
+  "tryRetinalLens": "جرب عدسة الشبكية",
+  "@tryRetinalLens": {
+    "description": "Button text for retinal lens model"
+  },
+  
+  "trySelfieCloseUp": "جرب السيلفي المقرب",
+  "@trySelfieCloseUp": {
+    "description": "Button text for selfie close up model"
+  },
+  
+  "startAnalysis": "ابدأ التحليل",
+  "@startAnalysis": {
+    "description": "Button text to start analysis"
+  },
+  
+  "selectRetinalModel": "اختر نموذج الشبكية",
+  "@selectRetinalModel": {
+    "description": "Button text to select retinal model"
+  },
+  
+  "selectExternalModel": "اختر النموذج الخارجي",
+  "@selectExternalModel": {
+    "description": "Button text to select external model"
+  },
+  
+  "highAccuracy": "دقة عالية",
+  "@highAccuracy": {
+    "description": "High accuracy label"
+  },
+  
+  "fastResults": "نتائج سريعة",
+  "@fastResults": {
+    "description": "Fast results label"
+  },
+  
+  "multipleConditions": "حالات متعددة",
+  "@multipleConditions": {
+    "description": "Multiple conditions label"
+  },
+  
+  "language": "اللغة",
+  "@language": {
+    "description": "Language setting label"
+  },
+  
+  "arabic": "العربية",
+  "@arabic": {
+    "description": "Arabic language name"
+  },
+  
+  "english": "English",
+  "@english": {
+    "description": "English language name"
+  },
+  
+  "settings": "الإعدادات",
+  "@settings": {
+    "description": "Settings title"
+  },
+  
+  "theme": "المظهر",
+  "@theme": {
+    "description": "Theme setting label"
+  },
+  
+  "light": "فاتح",
+  "@light": {
+    "description": "Light theme option"
+  },
+  
+  "dark": "داكن",
+  "@dark": {
+    "description": "Dark theme option"
+  },
+  
+  "system": "النظام",
+  "@system": {
+    "description": "System theme option"
+  },
+  
+  "diagnosis": "التشخيص",
+  "@diagnosis": {
+    "description": "Diagnosis navigation item"
+  },
+  
+  "chat": "المحادثة",
+  "@chat": {
+    "description": "Chat navigation item"
+  },
+  
+  "doctors": "الأطباء",
+  "@doctors": {
+    "description": "Doctors navigation item"
+  },
+  
+  "findEyeCareSpecialists": "ابحث عن أخصائيي العناية بالعين",
+  "@findEyeCareSpecialists": {
+    "description": "Title for doctors screen"
+  },
+  
+  "connectWithQualifiedOphthalmologists": "تواصل مع أطباء العيون المؤهلين وأخصائيي العناية بالعين في منطقتك. احجز المواعيد واحصل على رعاية متخصصة لصحة عينيك.",
+  "@connectWithQualifiedOphthalmologists": {
+    "description": "Description for doctors screen"
+  },
+  
+  "searchByNameOrSpecialty": "ابحث بالاسم أو التخصص...",
+  "@searchByNameOrSpecialty": {
+    "description": "Search field placeholder for doctors"
+  },
+  
+  "locationOrZipCode": "الموقع أو الرمز البريدي...",
+  "@locationOrZipCode": {
+    "description": "Location field placeholder"
+  },
+  
+  "filterResults": "تصفية النتائج",
+  "@filterResults": {
+    "description": "Filter results button"
+  },
+  
+  "loadMoreDoctors": "تحميل المزيد من الأطباء",
+  "@loadMoreDoctors": {
+    "description": "Load more doctors button"
+  },
+  
+  "bookAppointment": "احجز موعد",
+  "@bookAppointment": {
+    "description": "Book appointment button"
+  },
+  
+  "viewProfile": "عرض الملف الشخصي",
+  "@viewProfile": {
+    "description": "View profile button"
+  },
+  
+  "reviews": "مراجعات",
+  "@reviews": {
+    "description": "Reviews text"
+  },
+  
+  "miles": "ميل",
+  "@miles": {
+    "description": "Miles text"
+  },
+  
+  "availableToday": "متاح اليوم",
+  "@availableToday": {
+    "description": "Available today text"
+  },
+  
+  "nextAvailableTomorrow": "المتاح التالي: غداً",
+  "@nextAvailableTomorrow": {
+    "description": "Next available tomorrow text"
+  },
+  
+  "aiEyeHealthAssistant": "مساعد صحة العين بالذكاء الاصطناعي",
+  "@aiEyeHealthAssistant": {
+    "description": "AI Eye Health Assistant title"
+  },
+  
+  "getInstantAnswers": "احصل على إجابات فورية لأسئلتك حول صحة العين مع دعم الصوت",
+  "@getInstantAnswers": {
+    "description": "Get instant answers description"
+  },
+  
+  "eyePain": "ألم العين",
+  "@eyePain": {
+    "description": "Eye pain text"
+  },
+  
+  "blurredVision": "رؤية ضبابية",
+  "@blurredVision": {
+    "description": "Blurred vision text"
+  },
+  
+  "redEyes": "عيون حمراء",
+  "@redEyes": {
+    "description": "Red eyes text"
+  },
+  
+  "headaches": "صداع",
+  "@headaches": {
+    "description": "Headaches text"
+  },
+  
+  "startConversation": "ابدأ محادثة حول صحة عينيك",
+  "@startConversation": {
+    "description": "Start conversation text"
+  },
+  
+  "stopRecording": "إيقاف التسجيل",
+  "@stopRecording": {
+    "description": "Stop recording text"
+  },
+  
+  "startVoiceInput": "بدء الإدخال الصوتي",
+  "@startVoiceInput": {
+    "description": "Start voice input text"
+  },
+  
+  "sendMessage": "إرسال رسالة",
+  "@sendMessage": {
+    "description": "Send message text"
+  },
+  
+  "pleaseSelectImageAndModel": "يرجى اختيار صورة ونموذج أولاً",
+  "@pleaseSelectImageAndModel": {
+    "description": "Please select image and model error message"
+  },
+  
+  "diabeticRetinopathy": "اعتلال الشبكية السكري",
+  "@diabeticRetinopathy": {
+    "description": "Diabetic retinopathy condition"
+  },
+  
+  "hypertensiveRetinopathy": "اعتلال الشبكية الناتج عن ارتفاع ضغط الدم",
+  "@hypertensiveRetinopathy": {
+    "description": "Hypertensive retinopathy condition"
+  },
+  
+  "ageRelatedMacularDegeneration": "التنكس البقعي المرتبط بالعمر",
+  "@ageRelatedMacularDegeneration": {
+    "description": "Age-related macular degeneration condition"
+  },
+  
+  "glaucoma": "الزرق",
+  "@glaucoma": {
+    "description": "Glaucoma condition"
+  },
+  
+  "retinalDetachment": "انفصال الشبكية",
+  "@retinalDetachment": {
+    "description": "Retinal detachment condition"
+  },
+  
+  "macularEdema": "وذمة البقعة",
+  "@macularEdema": {
+    "description": "Macular edema condition"
+  },
+  
+  "retinalVeinOcclusion": "انسداد الوريد الشبكي",
+  "@retinalVeinOcclusion": {
+    "description": "Retinal vein occlusion condition"
+  },
+  
+  "normalRetina": "شبكية طبيعية",
+  "@normalRetina": {
+    "description": "Normal retina condition"
+  },
+  
+  "conjunctivitis": "التهاب الملتحمة",
+  "@conjunctivitis": {
+    "description": "Conjunctivitis condition"
+  },
+  
+  "dryEyeSyndrome": "متلازمة جفاف العين",
+  "@dryEyeSyndrome": {
+    "description": "Dry eye syndrome condition"
+  },
+  
+  "blepharitis": "التهاب الجفن",
+  "@blepharitis": {
+    "description": "Blepharitis condition"
+  },
+  
+  "cornealAbrasion": "خدش القرنية",
+  "@cornealAbrasion": {
+    "description": "Corneal abrasion condition"
+  },
+  
+  "pterygium": "الظفرة",
+  "@pterygium": {
+    "description": "Pterygium condition"
+  },
+  
+  "cataract": "إعتام عدسة العين",
+  "@cataract": {
+    "description": "Cataract condition"
+  },
+  
+  "normalExternalEye": "العين الخارجية طبيعية",
+  "@normalExternalEye": {
+    "description": "Normal external eye condition"
+  },
+  
+  "high": "عالي",
+  "@high": {
+    "description": "High severity"
+  },
+  
+  "medium": "متوسط",
+  "@medium": {
+    "description": "Medium severity"
+  },
+  
+  "low": "منخفض",
+  "@low": {
+    "description": "Low severity"
+  },
+  
+  "normal": "طبيعي",
+  "@normal": {
+    "description": "Normal severity"
+  },
+  
+  "ophthalmologist": "طبيب عيون",
+  "@ophthalmologist": {
+    "description": "Ophthalmologist specialty"
+  },
+  
+  "retinalSpecialist": "أخصائي الشبكية",
+  "@retinalSpecialist": {
+    "description": "Retinal specialist"
+  },
+  
+  "cornealSpecialist": "أخصائي القرنية",
+  "@cornealSpecialist": {
+    "description": "Corneal specialist"
+  },
+  
+  "retinalDisorders": "اضطرابات الشبكية",
+  "@retinalDisorders": {
+    "description": "Retinal disorders specialty"
+  },
+  
+  "diabeticEyeCare": "رعاية العين السكري",
+  "@diabeticEyeCare": {
+    "description": "Diabetic eye care specialty"
+  },
+  
+  "macularDegeneration": "التنكس البقعي",
+  "@macularDegeneration": {
+    "description": "Macular degeneration specialty"
+  },
+  
+  "cornealTransplant": "زراعة القرنية",
+  "@cornealTransplant": {
+    "description": "Corneal transplant specialty"
+  },
+  
+  "dryEyeTreatment": "علاج جفاف العين",
+  "@dryEyeTreatment": {
+    "description": "Dry eye treatment specialty"
+  },
+  
+  "keratoconus": "القرنية المخروطية",
+  "@keratoconus": {
+    "description": "Keratoconus specialty"
+  },
+  
+  "typeYourEyeHealthQuestion": "اكتب سؤالك حول صحة العين...",
+  "@typeYourEyeHealthQuestion": {
+    "description": "Chat input placeholder text"
+  },
+
+  "aboutAppTitle": "عن التطبيق",
+  "@aboutAppTitle": {
+    "description": "Title for the read me / about dialog"
+  },
+
+  "readMeContent": "هذا التطبيق يستخدم تقنيات الذكاء الاصطناعي لتحليل صور العين بهدف الكشف المبكر عن أمراض العيون.\nيمكنك اختيار التحليل عبر صور الشبكية (Retina) أو صور السيلفي (Selfie) حسب المتاح لديك.\n\nأنواع التحليل\n🔵 تحليل الشبكية (Retinal Analysis)\n\nيعتمد على صور شبكية مأخوذة من أجهزة طبية متخصصة\n\n🟡 تحليل السيلفي (Selfie Analysis)\n\nيعتمد على صورة مقربة للعين باستخدام كاميرا الهاتف\n\nالمميزات\n\n⚡ نتائج سريعة ودقيقة\n\n📱 سهل الاستخدام من أي هاتف\n\n🗺️ عرض أقرب الأطباء المتخصصين عبر الخريطة\n\n🔒 خصوصية كاملة للصور والبيانات\n\nملاحظات هامة\n\nالتطبيق أداة مساعدة ولا يغني عن مراجعة الطبيب.\n\nفي حالة وجود أعراض أو نتائج غير طبيعية، يُفضل استشارة طبيب عيون متخصص.\n\nالهدف\nنهدف إلى تعزيز الوعي الصحي وتمكين المستخدمين من الكشف المبكر عن أمراض العيون عبر الذكاء الاصطناعي.",
+  "@readMeContent": {
+    "description": "Full Read Me content in Arabic for the dialog"
+  },
+
+  "close": "إغلاق",
+  "@close": {
+    "description": "Close button label for dialogs"
+  },
+  
+  "theAppFeatures": "مميزات التطبيق",
+  "@theAppFeatures": {
+    "description": "Title for app features section"
+  },
+  
+  "aiPoweredChat": "محادثة الذكاء الاصطناعي",
+  "@aiPoweredChat": {
+    "description": "AI powered chat feature"
+  },
+  
+  "voiceAssistant": "مساعد صوتي",
+  "@voiceAssistant": {
+    "description": "Voice assistant feature"
+  },
+  
+  "findDoctors": "البحث عن الأطباء",
+  "@findDoctors": {
+    "description": "Find doctors feature"
+  },
+  
+  "nearbyLocations": "المواقع القريبة",
+  "@nearbyLocations": {
+    "description": "Nearby locations feature"
+  },
+  
+  "instantDiagnosis": "التشخيص الفوري",
+  "@instantDiagnosis": {
+    "description": "Instant diagnosis feature"
+  },
+  
+  "aiAnalysis": "التحليل بالذكاء الاصطناعي",
+  "@aiAnalysis": {
+    "description": "AI analysis feature"
+  },
+  
+  "multiLanguage": "متعدد اللغات",
+  "@multiLanguage": {
+    "description": "Multi language support"
+  },
+  
+  "arabicEnglish": "العربية والإنجليزية",
+  "@arabicEnglish": {
+    "description": "Arabic and English support"
+  },
+  
+  "recordingVoiceNote": "تسجيل رسالة صوتية...",
+  "@recordingVoiceNote": {
+    "description": "Recording voice note indicator text"
+  },
+  
+  "tapToStop": "اضغط للإيقاف",
+  "@tapToStop": {
+    "description": "Tap to stop recording text"
+  },
+  
+  "voiceNote": "رسالة صوتية",
+  "@voiceNote": {
+    "description": "Voice note label"
+  },
+  
+  "tapToPlay": "اضغط للاستماع",
+  "@tapToPlay": {
+    "description": "Tap to play voice note text"
+  },
+  
+  "speechNotClear": "سمعتك، لكن رسالتك لم تكن واضحة بما فيه الكفاية. هل يمكنك تكرار سؤالك عن صحة العين ببطء أكثر ووضوح؟",
+  "@speechNotClear": {
+    "description": "Message when speech is not clear"
+  },
+  
+  "couldNotUnderstand": "لم أفهم ما قلته. يرجى المحاولة بالحديث بوضوح أكثر أو تكرار رسالتك.",
+  "@couldNotUnderstand": {
+    "description": "Message when speech couldn't be understood"
+  },
+  
+  "voiceProcessingError": "عذراً، لدي مشكلة في معالجة رسالتك الصوتية. يرجى محاولة كتابة سؤالك بدلاً من ذلك.",
+  "@voiceProcessingError": {
+    "description": "Error message for voice processing issues"
+  }
+}
