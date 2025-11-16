@@ -6,8 +6,14 @@ import 'package:provider/provider.dart';
 import 'providers/app_provider.dart';
 import 'providers/chat_provider.dart';
 import 'providers/diagnosis_provider.dart';
+import 'providers/auth_provider.dart';
+import 'providers/doctor_provider.dart';
+import 'providers/huawei_sis_provider.dart';
+import 'providers/appointment_provider.dart';
 import 'routes/app_router.dart';
 import 'theme/app_theme.dart';
+import 'services/api_key_loader.dart';
+import 'services/voice_chat_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,11 +29,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
         ChangeNotifierProvider(create: (_) => DiagnosisProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()..load()),
+        ChangeNotifierProvider(create: (_) => DoctorProvider()),
+        ChangeNotifierProvider(create: (_) => AppointmentProvider()),
+        ChangeNotifierProvider(
+          create: (_) {
+            // Voice chat service - uses backend API (secure)
+            // TODO: Replace with actual backend URL
+            return HuaweiSisProvider(
+              service: VoiceChatService(backendUrl: 'http://10.0.2.2:3001'),
+            );
+          },
+        ),
       ],
       child: Consumer<AppProvider>(
         builder: (context, appProvider, child) {
           return MaterialApp.router(
-            title: 'EyeWise Connect',
+            title: 'EyeCloud',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.theme, // Only dark theme
             locale: appProvider.locale,
@@ -38,7 +56,7 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            routerConfig: AppRouter.router,
+            routerConfig: AppRouter.createRouter(context),
           );
         },
       ),

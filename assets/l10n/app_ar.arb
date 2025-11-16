@@ -1,6 +1,6 @@
 {
   "@@locale": "ar",
-  "appTitle": "عين الحياه",
+  "appTitle": "EyeCloud",
   "@appTitle": {
     "description": "The title of the application"
   },
@@ -20,7 +20,7 @@
     "description": "AI technology text in heading"
   },
   
-  "heroDescription": "نماذج ذكاء اصطناعي متقدمة لتحليل الشبكية وتقييم صحة العين. احصل على تشخيص فوري ودقيق للعين من خلال تقنيتنا المتطورة.",
+  "heroDescription": "نماذج ذكاء اصطناعي متقدمة لتحليل الشبكية وتقييم صحة العين من خلال تقنيتنا المتطورة.",
   "@heroDescription": {
     "description": "Main description text on hero section"
   },

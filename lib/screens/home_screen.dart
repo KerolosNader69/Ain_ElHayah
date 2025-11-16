@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import '../widgets/app_header.dart';
 import '../theme/app_theme.dart';
+import '../providers/auth_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -288,19 +290,34 @@ class HomeScreen extends StatelessWidget {
                   _buildFeatureTile(context, Icons.location_on, l10n.findDoctors, l10n.nearbyLocations),
                   _buildFeatureTile(context, Icons.medical_services, l10n.instantDiagnosis, l10n.aiAnalysis),
                   _buildFeatureTile(context, Icons.language, l10n.multiLanguage, l10n.arabicEnglish),
+                  _buildColorBlindTestTile(context, Icons.palette, 'اختبار عمى الألوان', 'فحص القدرة على تمييز الألوان'),
                 ],
               );
             }
             // On tablets/desktop: keep horizontal row
-            return Row(
+            return Column(
               children: [
-                Expanded(child: _buildFeatureTile(context, Icons.chat_bubble_outline, l10n.aiPoweredChat, l10n.voiceAssistant)),
-                const SizedBox(width: 16),
-                Expanded(child: _buildFeatureTile(context, Icons.location_on, l10n.findDoctors, l10n.nearbyLocations)),
-                const SizedBox(width: 16),
-                Expanded(child: _buildFeatureTile(context, Icons.medical_services, l10n.instantDiagnosis, l10n.aiAnalysis)),
-                const SizedBox(width: 16),
-                Expanded(child: _buildFeatureTile(context, Icons.language, l10n.multiLanguage, l10n.arabicEnglish)),
+                Row(
+                  children: [
+                    Expanded(child: _buildFeatureTile(context, Icons.chat_bubble_outline, l10n.aiPoweredChat, l10n.voiceAssistant)),
+                    const SizedBox(width: 16),
+                    Expanded(child: _buildFeatureTile(context, Icons.location_on, l10n.findDoctors, l10n.nearbyLocations)),
+                    const SizedBox(width: 16),
+                    Expanded(child: _buildFeatureTile(context, Icons.medical_services, l10n.instantDiagnosis, l10n.aiAnalysis)),
+                    const SizedBox(width: 16),
+                    Expanded(child: _buildFeatureTile(context, Icons.language, l10n.multiLanguage, l10n.arabicEnglish)),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: _buildColorBlindTestTile(context, Icons.palette, 'اختبار عمى الألوان', 'فحص القدرة على تمييز الألوان'),
+                    ),
+                    const Expanded(flex: 2, child: SizedBox()), // مساحة فارغة للتوازن
+                  ],
+                ),
               ],
             );
           },
@@ -562,6 +579,82 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildColorBlindTestTile(BuildContext context, IconData icon, String title, String subtitle) {
+    final theme = Theme.of(context);
+    final isPhone = MediaQuery.of(context).size.width < 600;
+    
+    return InkWell(
+      onTap: () => context.go('/color-blind-test'),
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: EdgeInsets.all(isPhone ? 12 : 16),
+        decoration: AppTheme.getGlassmorphismDecoration(context, opacity: 0.1).copyWith(
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xFF6366F1).withOpacity(0.1),
+              const Color(0xFF8B5CF6).withOpacity(0.1),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          border: Border.all(
+            color: const Color(0xFF6366F1).withOpacity(0.2),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: Colors.white,
+                size: isPhone ? 20 : 24,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    title,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: AppTheme.getTextColor(context),
+                      fontWeight: FontWeight.w600,
+                      fontSize: isPhone ? 13 : 14,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: AppTheme.getTextColor(context, isDescription: true),
+                      fontSize: isPhone ? 11 : 12,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -25,7 +25,7 @@ class AppLogo extends StatelessWidget {
           width: size,
           height: size,
           child: Image.asset(
-            'assets/images/Ain Al-Hayah@Logo.png',
+            'assets/images/EyeCloud-Logo.png',
             width: size,
             height: size,
             fit: BoxFit.contain,
@@ -44,7 +44,7 @@ class AppLogo extends StatelessWidget {
                 ),
                 child: Center(
                   child: Icon(
-                    Icons.visibility,
+                    Icons.cloud,
                     color: AppTheme.primaryColor,
                     size: size * 0.6,
                   ),

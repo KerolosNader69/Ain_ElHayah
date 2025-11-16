@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:eye_wise_connect/services/retina_inference_service.dart';
+import 'package:eye_wise_connect/services/ai_chat_service.dart';
 
 class DiagnosisProvider extends ChangeNotifier {
   String? _selectedModel;
@@ -65,22 +66,45 @@ class DiagnosisProvider extends ChangeNotifier {
         final result = hasBytes
             ? await _retina.predictBytes(_selectedImageBytes!)
             : await _retina.predict(_selectedImage!);
+
+        // Check if we got a valid result
+        if (result.confidence == 0.0 && result.predictedClass == 'Unknown') {
+          _error = 'Model inference returned no valid results. Please check:\n'
+                   '1. ModelArts configuration in env.json\n'
+                   '2. Model deployment is active\n'
+                   '3. Image format is correct';
+          _isAnalyzing = false;
+          notifyListeners();
+          return;
+        }
+
+        // Always request DeepSeek second opinion (handled gracefully if API key missing)
+        String? deepseekNote;
+        try {
+          final bytes = hasBytes ? _selectedImageBytes! : await _selectedImage!.readAsBytes();
+          deepseekNote = await AIChatService.reasonWithModelOutputs(
+            imageBytes: bytes,
+            probabilities: result.probabilities,
+          );
+        } catch (e) {
+          // Silently ignore DeepSeek errors - it's optional
+          print('[DiagnosisProvider] DeepSeek second opinion unavailable: $e');
+        }
+
+        final primaryCondition = Condition(
+          name: result.predictedClass,
+          severity: _mapSeverity(result.predictedClass, result.confidence),
+          confidence: result.confidence,
+        );
+        final recs = _generateRecommendations([primaryCondition]);
+        if (deepseekNote != null && deepseekNote.trim().isNotEmpty) {
+          recs.insert(0, deepseekNote);
+        }
+
         _diagnosisResult = DiagnosisResult(
           confidence: result.confidence,
-          conditions: [
-            Condition(
-              name: result.predictedClass,
-              severity: _mapSeverity(result.predictedClass, result.confidence),
-              confidence: result.confidence,
-            ),
-          ],
-          recommendations: _generateRecommendations([
-            Condition(
-              name: result.predictedClass,
-              severity: _mapSeverity(result.predictedClass, result.confidence),
-              confidence: result.confidence,
-            )
-          ]),
+          conditions: [primaryCondition],
+          recommendations: recs,
         );
       } else {
         await Future.delayed(const Duration(seconds: 1));
@@ -89,7 +113,13 @@ class DiagnosisProvider extends ChangeNotifier {
       _isAnalyzing = false;
       notifyListeners();
     } catch (e) {
-      _error = 'Analysis failed: $e';
+      // Extract error message more clearly
+      String errorMessage = e.toString();
+      if (errorMessage.contains('ModelArts')) {
+        errorMessage = errorMessage.replaceAll('Exception: ', '');
+      }
+      _error = 'Analysis failed: $errorMessage';
+      print('[DiagnosisProvider] Error: $e');
       _isAnalyzing = false;
       notifyListeners();
     }

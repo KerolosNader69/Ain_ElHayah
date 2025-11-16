@@ -29,8 +29,12 @@ class DiagnosisScreen extends StatelessWidget {
                    _buildHeroSection(context, l10n),
                    const SizedBox(height: 48),
                    
-                   // AI Models Section
-                   _buildAIModelsSection(context, l10n),
+                                     // AI Models Section
+                  _buildAIModelsSection(context, l10n),
+                  const SizedBox(height: 48),
+                  
+                  // Additional Tests Section
+
                 ],
               ),
             ),
@@ -237,17 +241,30 @@ class DiagnosisScreen extends StatelessWidget {
                   _buildModelCard(context, l10n, 'selfie'),
                   const SizedBox(height: 16),
                   _buildQuestionnaireCard(context),
+                  const SizedBox(height: 16),
+                  _buildColorBlindTestCard(context),
                 ],
               );
             } else {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              return Column(
                 children: [
-                  Expanded(child: _buildModelCard(context, l10n, 'retinal')),
-                  const SizedBox(width: 16),
-                  Expanded(child: _buildModelCard(context, l10n, 'selfie')),
-                  const SizedBox(width: 16),
-                  Expanded(child: _buildQuestionnaireCard(context)),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: _buildModelCard(context, l10n, 'retinal')),
+                      const SizedBox(width: 16),
+                      Expanded(child: _buildModelCard(context, l10n, 'selfie')),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: _buildQuestionnaireCard(context)),
+                      const SizedBox(width: 16),
+                      Expanded(child: _buildColorBlindTestCard(context)),
+                    ],
+                  ),
                 ],
               );
             }
@@ -260,30 +277,22 @@ class DiagnosisScreen extends StatelessWidget {
   Widget _buildModelCard(BuildContext context, AppLocalizations l10n, String modelType) {
     String title;
     String description;
-    String accuracy;
-    String time;
     String imageType;
     
     switch (modelType) {
       case 'retinal':
         title = l10n.retinalLens;
         description = l10n.retinalLensDescription;
-        accuracy = l10n.retinalAccuracy;
-        time = l10n.retinalTime;
         imageType = l10n.retinalPhoto;
         break;
       case 'selfie':
         title = l10n.selfieCloseUp;
         description = l10n.selfieCloseUpDescription;
-        accuracy = l10n.selfieAccuracy;
-        time = l10n.selfieTime;
         imageType = l10n.closeUpSelfie;
         break;
       default:
         title = '';
         description = '';
-        accuracy = '';
-        time = '';
         imageType = '';
     }
     
@@ -328,22 +337,8 @@ class DiagnosisScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           
-          // Stats
-          Row(
-            children: [
-              Expanded(
-                child: _buildStat(l10n.accuracy, accuracy),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildStat(l10n.analysisTime, time),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildStat(l10n.imageType, imageType),
-              ),
-            ],
-          ),
+          // Image Type Only
+          _buildStat(l10n.imageType, imageType),
           const SizedBox(height: 24),
           
           // Action Button
@@ -486,6 +481,164 @@ class DiagnosisScreen extends StatelessWidget {
             fontWeight: FontWeight.w500,
             letterSpacing: 0.3,
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildColorBlindTestCard(BuildContext context) {
+    final isArabic = Localizations.localeOf(context).languageCode.startsWith('ar');
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFF6366F1).withOpacity(0.1),
+            const Color(0xFF8B5CF6).withOpacity(0.1),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: const Color(0xFF6366F1).withOpacity(0.3),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF6366F1).withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.palette,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  isArabic ? 'اختبار عمى الألوان' : 'Color Blind Test',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            isArabic
+                ? 'فحص القدرة على تمييز الألوان المختلفة من خلال اختبارات إيشيهارا المتخصصة.'
+                : 'Test your ability to distinguish different colors through specialized Ishihara tests.',
+            style: TextStyle(
+              color: Colors.grey[400],
+              fontSize: 16,
+              height: 1.5,
+              letterSpacing: 0.3,
+            ),
+          ),
+          const SizedBox(height: 24),
+          
+          // Features
+          Row(
+            children: [
+              Expanded(
+                child: _buildColorTestFeature(
+                  context, 
+                  isArabic ? '5 اختبارات' : '5 Tests', 
+                  Icons.quiz,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildColorTestFeature(
+                  context, 
+                  isArabic ? '< 3 دقائق' : '< 3 min', 
+                  Icons.timer,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildColorTestFeature(
+                  context, 
+                  isArabic ? 'نتائج فورية' : 'Instant', 
+                  Icons.speed,
+                ),
+              ),
+            ],
+          ),
+          
+          const SizedBox(height: 24),
+          
+          // Action Button
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () => context.go('/color-blind-test'),
+              icon: const Icon(Icons.play_arrow),
+              label: Text(
+                isArabic ? 'ابدأ اختبار الألوان' : 'Start Color Test',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF6366F1),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 4,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildColorTestFeature(BuildContext context, String text, IconData icon) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          size: 20,
+          color: const Color(0xFF6366F1),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          text,
+          style: TextStyle(
+            color: Colors.grey[300],
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+          textAlign: TextAlign.center,
         ),
       ],
     );

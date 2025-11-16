@@ -6,6 +6,8 @@ import '../providers/app_provider.dart';
 import '../theme/app_theme.dart';
 import 'app_logo.dart';
 import 'language_selector.dart';
+import '../providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader({super.key});
@@ -78,9 +80,19 @@ class AppHeader extends StatelessWidget {
 
   Widget _buildNavItems(BuildContext context, String currentPath) {
     final l10n = AppLocalizations.of(context)!;
+    final auth = Provider.of<AuthProvider>(context);
+    
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmallScreen = constraints.maxWidth < 768;
+        
+        // Determine the doctors section text and route based on user role
+        final doctorsText = auth.isLoggedIn && auth.role == UserRole.doctor 
+            ? 'Doctor Dashboard' 
+            : l10n.doctors;
+        final doctorsRoute = auth.isLoggedIn && auth.role == UserRole.doctor 
+            ? '/doctor/dashboard' 
+            : '/doctors';
         
         if (isSmallScreen) {
           // For small screens, use a horizontal scrollable list
@@ -92,7 +104,7 @@ class AppHeader extends StatelessWidget {
                 _buildNavItem(context, l10n.appTitle, '/', currentPath == '/'),
                 _buildNavItem(context, l10n.diagnosis, '/diagnosis', currentPath == '/diagnosis'),
                 _buildNavItem(context, l10n.chat, '/chat', currentPath == '/chat'),
-                _buildNavItem(context, l10n.doctors, '/doctors', currentPath == '/doctors'),
+                _buildNavItem(context, doctorsText, doctorsRoute, currentPath == doctorsRoute),
               ],
             ),
           );
@@ -104,7 +116,7 @@ class AppHeader extends StatelessWidget {
               _buildNavItem(context, l10n.appTitle, '/', currentPath == '/'),
               _buildNavItem(context, l10n.diagnosis, '/diagnosis', currentPath == '/diagnosis'),
               _buildNavItem(context, l10n.chat, '/chat', currentPath == '/chat'),
-              _buildNavItem(context, l10n.doctors, '/doctors', currentPath == '/doctors'),
+              _buildNavItem(context, doctorsText, doctorsRoute, currentPath == doctorsRoute),
             ],
           );
         }
@@ -114,6 +126,16 @@ class AppHeader extends StatelessWidget {
 
   Widget _buildMobileMenu(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final auth = Provider.of<AuthProvider>(context);
+    
+    // Determine the doctors section text and route based on user role
+    final doctorsText = auth.isLoggedIn && auth.role == UserRole.doctor 
+        ? 'Doctor Dashboard' 
+        : l10n.doctors;
+    final doctorsRoute = auth.isLoggedIn && auth.role == UserRole.doctor 
+        ? '/doctor/dashboard' 
+        : '/doctors';
+    
     return Container(
       height: 40,
       decoration: BoxDecoration(
@@ -130,7 +152,7 @@ class AppHeader extends StatelessWidget {
           PopupMenuItem(value: '/', child: Text(l10n.appTitle)),
           PopupMenuItem(value: '/diagnosis', child: Text(l10n.diagnosis)),
           PopupMenuItem(value: '/chat', child: Text(l10n.chat)),
-          PopupMenuItem(value: '/doctors', child: Text(l10n.doctors)),
+          PopupMenuItem(value: doctorsRoute, child: Text(doctorsText)),
         ],
       ),
     );
@@ -224,10 +246,51 @@ class AppHeader extends StatelessWidget {
   }
 
   Widget _buildHeaderActions(BuildContext context) {
+    final auth = Provider.of<AuthProvider>(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         const LanguageSelector(),
+        const SizedBox(width: 16),
+        if (auth.isLoggedIn) ...[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppTheme.darkMuted.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppTheme.getBorderColor(context), width: 1),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  auth.role == UserRole.doctor ? Icons.medical_information : Icons.person,
+                  size: 18,
+                  color: AppTheme.primaryColor,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  auth.role == UserRole.doctor ? 'Doctor' : 'Patient',
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          _buildIconButton(
+            context,
+            Icons.logout,
+            () async {
+              await auth.logout();
+            },
+          ),
+        ] else ...[
+          _buildIconButton(
+            context,
+            Icons.login,
+            () => context.go('/login'),
+          ),
+        ],
         const SizedBox(width: 16),
         _buildIconButton(
           context,

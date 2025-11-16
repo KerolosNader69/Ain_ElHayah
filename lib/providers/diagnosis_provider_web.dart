@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:eye_wise_connect/services/retina_inference_service.dart';
+import 'package:eye_wise_connect/services/ai_chat_service.dart';
 
 class DiagnosisProvider extends ChangeNotifier {
   String? _selectedModel;
@@ -49,25 +52,96 @@ class DiagnosisProvider extends ChangeNotifier {
       notifyListeners();
 
       if (_selectedModel == 'retinal') {
-        final result = await _retina.predictBytes(_selectedImageBytes!);
-        _diagnosisResult = DiagnosisResult(
-          confidence: result.confidence,
-          conditions: [
-            Condition(
-              name: result.predictedClass,
-              severity: _mapSeverity(result.predictedClass, result.confidence),
-              confidence: result.confidence,
-            ),
-          ],
-          recommendations: _generateRecommendations([
-            Condition(
-              name: result.predictedClass,
-              severity: _mapSeverity(result.predictedClass, result.confidence),
-              confidence: result.confidence,
-            )
-          ]),
-        );
+        print('[DiagnosisProvider] Attempting retinal analysis...');
+        
+        // Try mock API first (since ModelArts isn't working)
+        try {
+          print('[DiagnosisProvider] Calling mock retinal API...');
+          final imageBase64 = base64Encode(_selectedImageBytes!);
+          final response = await http.post(
+            Uri.parse('http://localhost:3001/api/retinal/analyze'),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode({'imageBase64': imageBase64}),
+          );
+
+          if (response.statusCode == 200) {
+            final data = jsonDecode(response.body);
+            if (data['success'] == true) {
+              print('[DiagnosisProvider] Mock API returned result');
+              
+              final conditions = (data['conditions'] as List)
+                  .map((c) => Condition(
+                        name: c['name'],
+                        severity: c['severity'],
+                        confidence: (c['confidence'] as num).toDouble(),
+                      ))
+                  .toList();
+
+              final recommendations = (data['recommendations'] as List)
+                  .map((r) => r.toString())
+                  .toList();
+
+              _diagnosisResult = DiagnosisResult(
+                confidence: (data['confidence'] as num).toDouble(),
+                conditions: conditions,
+                recommendations: recommendations,
+              );
+              
+              _isAnalyzing = false;
+              notifyListeners();
+              return;
+            }
+          }
+        } catch (e) {
+          print('[DiagnosisProvider] Mock API failed: $e, trying ModelArts...');
+        }
+
+        // Fallback to real ModelArts if mock fails
+        try {
+          print('[DiagnosisProvider] Using real ModelArts inference for retinal model');
+          
+          final result = await _retina.predictBytes(_selectedImageBytes!);
+
+          // Always request DeepSeek second opinion (handled gracefully if API key missing)
+          print('[DiagnosisProvider] Requesting AI second opinion...');
+          String? deepseekNote;
+          try {
+            deepseekNote = await AIChatService.reasonWithModelOutputs(
+              imageBytes: _selectedImageBytes!,
+              probabilities: result.probabilities,
+            );
+            if (deepseekNote.trim().isNotEmpty) {
+              print('[DiagnosisProvider] Second opinion received (${deepseekNote.length} chars)');
+            } else {
+              print('[DiagnosisProvider] Second opinion returned empty');
+            }
+          } catch (e) {
+            print('[DiagnosisProvider] Second opinion failed: $e');
+          }
+
+          final primaryCondition = Condition(
+            name: result.predictedClass,
+            severity: _mapSeverity(result.predictedClass, result.confidence),
+            confidence: result.confidence,
+          );
+          final recs = _generateRecommendations([primaryCondition]);
+          if (deepseekNote != null && deepseekNote.trim().isNotEmpty) {
+            recs.insert(0, deepseekNote);
+          }
+
+          _diagnosisResult = DiagnosisResult(
+            confidence: result.confidence,
+            conditions: [primaryCondition],
+            recommendations: recs,
+          );
+          
+          print('[DiagnosisProvider] Diagnosis complete - Class: ${primaryCondition.name}, Confidence: ${result.confidence}, Recommendations: ${recs.length}');
+        } catch (e) {
+          print('[DiagnosisProvider] ModelArts also failed: $e');
+          throw Exception('Both mock and ModelArts APIs failed');
+        }
       } else {
+        print('[DiagnosisProvider] Using mock data for external eye model');
         await Future.delayed(const Duration(seconds: 1));
         _diagnosisResult = _generateMockResult();
       }
@@ -90,38 +164,13 @@ class DiagnosisProvider extends ChangeNotifier {
   }
 
   DiagnosisResult _generateMockResult() {
-    final isRetinal = _selectedModel == 'retinal';
-    final conditions = isRetinal ? _generateRetinalConditions() : _generateExternalConditions();
+    // Mock data for external eye model (not yet implemented)
+    final conditions = _generateExternalConditions();
     return DiagnosisResult(
       confidence: 0.9,
       conditions: conditions,
       recommendations: _generateRecommendations(conditions),
     );
-  }
-
-  List<Condition> _generateRetinalConditions() {
-    final possibleConditions = [
-      {'name': 'Diabetic Retinopathy', 'severity': 'Medium', 'confidence': 0.92},
-      {'name': 'Hypertensive Retinopathy', 'severity': 'Low', 'confidence': 0.87},
-      {'name': 'Age-related Macular Degeneration', 'severity': 'High', 'confidence': 0.95},
-      {'name': 'Glaucoma', 'severity': 'Medium', 'confidence': 0.89},
-      {'name': 'Retinal Detachment', 'severity': 'High', 'confidence': 0.98},
-      {'name': 'Macular Edema', 'severity': 'Medium', 'confidence': 0.91},
-      {'name': 'Retinal Vein Occlusion', 'severity': 'High', 'confidence': 0.94},
-      {'name': 'Normal Retina', 'severity': 'Normal', 'confidence': 0.96},
-    ];
-    final random = DateTime.now().millisecondsSinceEpoch;
-    final numConditions = (random % 3) + 1;
-    final selectedConditions = <Condition>[];
-    for (int i = 0; i < numConditions; i++) {
-      final condition = possibleConditions[(random + i) % possibleConditions.length];
-      selectedConditions.add(Condition(
-        name: condition['name'] as String,
-        severity: condition['severity'] as String,
-        confidence: condition['confidence'] as double,
-      ));
-    }
-    return selectedConditions;
   }
 
   List<Condition> _generateExternalConditions() {
@@ -179,6 +228,12 @@ class DiagnosisProvider extends ChangeNotifier {
     if (confidence >= 0.9) return 'High';
     if (confidence >= 0.8) return 'Medium';
     return 'Low';
+  }
+
+  // Test-only method to expose _generateRecommendations for verification
+  @visibleForTesting
+  List<String> generateRecommendationsForTest(List<Condition> conditions) {
+    return _generateRecommendations(conditions);
   }
 }
 

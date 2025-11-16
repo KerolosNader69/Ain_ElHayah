@@ -9,9 +9,13 @@ import '../theme/app_theme.dart';
 import 'dart:typed_data';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
 import '../services/ai_chat_service.dart';
+import '../services/api_key_loader.dart';
+import '../providers/huawei_sis_provider.dart';
+import '../services/voice_chat_service.dart';
+import '../widgets/voice_chat_button.dart';
+import '../config/backend_config.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -25,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
   final SpeechToText _speechToText = SpeechToText();
   final FlutterTts _flutterTts = FlutterTts();
-  bool _speechEnabled = false;
+  bool _speechEnabled = false; // Will reflect SIS availability when SIS-only
   bool _isListening = false;
   bool _isTyping = false;
   bool _isSpeaking = false;
@@ -35,6 +39,14 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   late AnimationController _typingAnimationController;
   late AnimationController _pulseAnimationController;
   late AnimationController _speakerAnimationController;
+
+  // Huawei SIS integration
+  HuaweiSisProvider? _sisProvider;
+  bool _sisAvailable = false;
+  String? _sisAk;
+  String? _sisSk;
+  String? _sisProjectId;
+  String? _sisEndpoint;
 
   @override
   void initState() {
@@ -53,6 +65,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       vsync: this,
     )..repeat(reverse: true);
     
+    _initializeSis();
     // Set up callback for AI messages
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final chatProvider = Provider.of<ChatProvider>(context, listen: false);
@@ -61,6 +74,29 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       final appProvider = Provider.of<AppProvider>(context, listen: false);
       AIChatService.setPreferredLanguageCode(appProvider.locale.languageCode);
     });
+  }
+
+  Future<void> _initializeSis() async {
+    // SIS now uses backend service - no need for direct initialization
+    // Voice chat is available through VoiceChatButton widget
+    print('SIS: Using backend service (secure mode)');
+    setState(() {
+      _sisAvailable = false; // Disable old SIS integration
+    });
+  }
+
+  HuaweiSisProvider _buildSisProviderForCurrentLanguage() {
+    // Use backend service instead of direct SIS connection
+    // TODO: Replace with actual backend URL
+    return HuaweiSisProvider(
+      service: VoiceChatService(backendUrl: 'http://10.0.2.2:3001'),
+    );
+  }
+
+  String _mapUiLangToSis(String uiLang) {
+    // uiLang like 'en-US' / 'ar-EG' => SIS expects 'en_US' / 'ar_AE'
+    if (uiLang.toLowerCase().startsWith('ar')) return 'ar_AE';
+    return 'en_US';
   }
 
   @override
@@ -74,19 +110,9 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Future<void> _initializeSpeech() async {
     try {
       print('Initializing speech recognition...');
-      _speechEnabled = await _speechToText.initialize(
-        onError: (error) {
-          print('Speech recognition error: $error');
-          setState(() {
-            _speechEnabled = false;
-          });
-        },
-        onStatus: (status) {
-          print('Speech recognition status: $status');
-        },
-        debugLogging: true, // Enable debug logging
-      );
-      print('Speech recognition initialized: $_speechEnabled');
+      // SIS-only mode: do not initialize local speech_to_text. Toggle readiness by SIS config.
+      _speechEnabled = false;
+      print('Local speech_to_text disabled (SIS-only mode)');
       
       // Initialize TTS with better configuration
       print('Initializing TTS...');
@@ -447,9 +473,9 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         children: [
           // App logo (no background)
           Image.asset(
-            'assets/images/Ain Al-Hayah@Logo.png',
-            height: 72,
-            width: 72,
+            'assets/images/EyeCloud-Logo.png',
+            height: 96,
+            width: 96,
           ),
           
           const SizedBox(height: 24),
@@ -479,32 +505,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Speech recognition status
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: _speechEnabled 
-                      ? Colors.green.withOpacity(0.1)
-                      : Colors.red.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: _speechEnabled ? Colors.green : Colors.red,
-                    width: 1,
-                  ),
-                ),
-                child: Text(
-                  _speechEnabled 
-                      ? '🎤 Voice recognition ready'
-                      : '❌ Voice recognition not available',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: _speechEnabled ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              
-              const SizedBox(width: 12),
-              
               // AI Speaking status
               if (_isSpeaking)
                 Container(
@@ -899,9 +899,9 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Image.asset(
-                'assets/images/Ain Al-Hayah@Logo.png',
-                height: 20,
-                width: 20,
+                'assets/images/EyeCloud-Logo.png',
+                height: 28,
+                width: 28,
               ),
             ),
             const SizedBox(width: 8),
@@ -1014,9 +1014,9 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Image.asset(
-              'assets/images/Ain Al-Hayah@Logo.png',
-              height: 20,
-              width: 20,
+              'assets/images/EyeCloud-Logo.png',
+              height: 28,
+              width: 28,
             ),
           ),
           const SizedBox(width: 8),
@@ -1111,44 +1111,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               
               const SizedBox(width: 12),
               
-              // Voice Note Button
-              AnimatedBuilder(
-                animation: _pulseAnimationController,
-                builder: (context, child) {
-                  final isRecording = _isListening;
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: isRecording
-                          ? AppTheme.errorColor.withOpacity(0.1)
-                          : AppTheme.getMutedBackgroundColor(context),
-                      borderRadius: BorderRadius.circular(12),
-                      border: isRecording
-                          ? Border.all(
-                              color: AppTheme.errorColor.withOpacity(0.3),
-                              width: 2,
-                            )
-                          : null,
-                    ),
-                    child: IconButton(
-                      onPressed: isRecording
-                          ? () => _stopVoiceNoteRecording(chatProvider)
-                          : () => _startVoiceNoteRecording(chatProvider),
-                      icon: Icon(
-                        isRecording ? Icons.stop : Icons.mic,
-                        color: isRecording
-                            ? AppTheme.errorColor
-                            : AppTheme.getTextColor(context),
-                      ),
-                      tooltip: isRecording
-                          ? l10n.stopRecording 
-                          : 'Tap to record voice message',
-                    ),
-                  );
-                },
-              ),
-              
-              const SizedBox(width: 12),
-              
               // Text Input
               Expanded(
                 child: Container(
@@ -1180,7 +1142,50 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 ),
               ),
               
-              const SizedBox(width: 12),
+              const SizedBox(width: 8),
+              
+              // Voice Chat Button (available on all platforms)
+              VoiceChatButton(
+                backendUrl: BackendConfig.getBackendUrl(),
+                onResponse: (userText, botReply) {
+                  // Add user message
+                  final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+                  chatProvider.addMessage(userText, true);
+                  // Add bot reply
+                  chatProvider.addMessage(botReply, false);
+                  _scrollToBottom();
+                },
+                onError: (error) {
+                  // Show more detailed error message
+                  String errorMessage = error;
+                  
+                  // Provide helpful context based on error type
+                  if (error.contains('Connection') || error.contains('Failed host lookup')) {
+                    errorMessage = 'Voice chat service unavailable. Please check your connection and ensure the backend server is running.';
+                  } else if (error.contains('permission')) {
+                    errorMessage = 'Microphone access required. Please enable microphone permission in your device settings.';
+                  } else if (error.contains('transcription') || error.contains('SIS')) {
+                    errorMessage = 'Could not understand audio. Please speak clearly and try again.';
+                  } else if (error.contains('chatbot')) {
+                    errorMessage = 'Chatbot temporarily unavailable. Your message was transcribed but could not be processed.';
+                  }
+                  
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(errorMessage),
+                      backgroundColor: Colors.red,
+                      duration: const Duration(seconds: 4),
+                      action: SnackBarAction(
+                        label: 'Dismiss',
+                        textColor: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ),
+                  );
+                },
+              ),
+              
+              const SizedBox(width: 8),
               
               // Send Button
               Container(
@@ -1301,39 +1306,30 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   void _startVoiceNoteRecording(ChatProvider chatProvider) async {
     try {
-      // Use real-time speech-to-text
+      if (!(_sisAvailable && _sisAk != null && _sisAk!.isNotEmpty)) {
+        throw Exception('SIS config missing. Please configure SIS via --dart-define (web) or env.json.');
+      }
       setState(() {
         _isListening = true;
       });
 
-      await _speechToText.listen(
-        onResult: (result) {
-          print('Speech recognition result: ${result.recognizedWords} (final: ${result.finalResult})');
-          
-          // Update the text field with partial results
-          if (result.recognizedWords.isNotEmpty) {
-            _messageController.text = result.recognizedWords;
-          }
-          
-          // If it's a final result, send the message
-          if (result.finalResult && result.recognizedWords.isNotEmpty) {
-            print('Final result detected, sending message: ${result.recognizedWords}');
-            setState(() {
-              _isListening = false;
-            });
-            // Automatically send the message
-            _sendMessage();
-          }
-        },
-        listenFor: const Duration(seconds: 30),
-        pauseFor: const Duration(seconds: 5),
-        localeId: _currentLanguage,
-        partialResults: true,
-      );
+      // Rebuild provider to reflect current language
+      _sisProvider = _buildSisProviderForCurrentLanguage();
+
+      // Listen to transcript updates
+      _sisProvider!.addListener(() {
+        final text = _sisProvider!.transcript;
+        if (text.isNotEmpty) {
+          _messageController.text = text;
+        }
+      });
+
+      await _sisProvider!.startListening();
     } catch (e) {
       print('Error starting voice recording: $e');
       // Handle recording error
       if (mounted) {
+        setState(() { _isListening = false; });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Failed to start recording: $e'),
@@ -1346,19 +1342,28 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   void _stopVoiceNoteRecording(ChatProvider chatProvider) async {
     try {
-      print('Stopping speech recognition...');
-      // Stop real-time speech recognition
-      await _speechToText.stop();
+      print('Stopping SIS recognition...');
+      if (_sisProvider != null) {
+        await _sisProvider!.stopListening();
+      }
       setState(() {
         _isListening = false;
       });
       
       // Check if we have any recognized text and send it
-      final recognizedText = _messageController.text.trim();
+      final recognizedText = () {
+        if (_sisProvider != null) {
+          final t = _sisProvider!.transcript.trim();
+          if (t.isNotEmpty) return t;
+        }
+        return _messageController.text.trim();
+      }();
       print('Recognized text when stopping: "$recognizedText"');
       
       if (recognizedText.isNotEmpty) {
         print('Sending recognized text: $recognizedText');
+        // Ensure controller has final text
+        _messageController.text = recognizedText;
         _sendMessage();
       } else {
         // Show dialog to manually enter text if speech recognition failed

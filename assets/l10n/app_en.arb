@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "عين الحياه",
+  "appTitle": "EyeCloud",
   "@appTitle": {
     "description": "The title of the application"
   },
@@ -20,7 +20,7 @@
     "description": "AI technology text in heading"
   },
   
-  "heroDescription": "Advanced AI models for retinal analysis and eye health assessment. Get instant, accurate eye diagnosis through our cutting-edge technology.",
+  "heroDescription": "Advanced AI models for retinal analysis and eye health assessment through our cutting-edge technology.",
   "@heroDescription": {
     "description": "Main description text on hero section"
   },

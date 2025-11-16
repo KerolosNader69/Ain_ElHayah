@@ -1,0 +1,33 @@
+# Flutter build artifacts
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+!build/web/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+coverage/
+test/
+
+# Android/iOS
+android/
+ios/
+macos/
+linux/
+windows/
+
+# Backend (if you want to deploy separately)
+backend/node_modules/
+backend/.env

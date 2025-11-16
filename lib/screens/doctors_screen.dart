@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/app_header.dart';
 import '../theme/app_theme.dart';
+import 'doctor_profile_screen.dart';
+import 'appointment_booking_screen.dart';
 
 class Doctor {
   final int id;
@@ -504,7 +506,15 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AppointmentBookingScreen(
+                              doctor: doctor,
+                            ),
+                          ),
+                        );
+                      },
                       icon: const Icon(Icons.calendar_today, size: 16),
                       label: FittedBox(
                         fit: BoxFit.scaleDown,
@@ -517,7 +527,15 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DoctorProfileScreen(
+                              doctor: doctor,
+                            ),
+                          ),
+                        );
+                      },
                       style: AppTheme.getSecondaryButtonStyle(context),
                       child: FittedBox(
                         fit: BoxFit.scaleDown,

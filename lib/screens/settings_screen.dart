@@ -3,7 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../widgets/app_header.dart';
 import '../providers/app_provider.dart';
+import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
+import '../services/api_key_loader.dart';
+import '../services/huawei_dli_service.dart';
+import '../services/voice_chat_service.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -32,6 +36,10 @@ class SettingsScreen extends StatelessWidget {
                   _buildHeader(context),
                   const SizedBox(height: 48),
                   _buildLanguageSection(context),
+                  const SizedBox(height: 48),
+                  _buildAccountSection(context),
+                  const SizedBox(height: 48),
+                  _buildDliTestSection(context),
                   const SizedBox(height: 48),
                   _buildAboutSection(context),
                 ],
@@ -237,6 +245,285 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildAccountSection(BuildContext context) {
+    final theme = Theme.of(context);
+    final auth = Provider.of<AuthProvider>(context);
+    
+    return Container(
+      decoration: AppTheme.getSurfaceDecoration(context),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [AppTheme.errorColor, AppTheme.errorColor.withOpacity(0.8)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.account_circle,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Account',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          color: AppTheme.getTextColor(context),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        'Manage your account settings',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: AppTheme.getTextColor(context, isDescription: true),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 24),
+            
+            if (auth.isLoggedIn) ...[
+              // User Info
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppTheme.darkMuted,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: AppTheme.getBorderColor(context),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      auth.role == UserRole.doctor ? Icons.medical_information : Icons.person,
+                      color: AppTheme.primaryColor,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Logged in as',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: AppTheme.getTextColor(context, isDescription: true),
+                            ),
+                          ),
+                          Text(
+                            auth.role == UserRole.doctor ? 'Doctor' : 'Patient',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: AppTheme.getTextColor(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 16),
+              
+              // Sign Out Button
+              InkWell(
+                onTap: () => _showSignOutDialog(context),
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppTheme.errorColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppTheme.errorColor.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: AppTheme.errorColor,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Sign Out',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                color: AppTheme.errorColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              'Sign out of your account',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: AppTheme.getTextColor(context, isDescription: true),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppTheme.errorColor,
+                        size: 16,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ] else ...[
+              // Sign In Button
+              InkWell(
+                onTap: () => Navigator.of(context).pushNamed('/login'),
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppTheme.primaryColor.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.login,
+                        color: AppTheme.primaryColor,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Sign In',
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                color: AppTheme.primaryColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              'Sign in to your account',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: AppTheme.getTextColor(context, isDescription: true),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppTheme.primaryColor,
+                        size: 16,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showSignOutDialog(BuildContext context) {
+    final theme = Theme.of(context);
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: AppTheme.getSurfaceColor(context),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Row(
+            children: [
+              Icon(
+                Icons.logout,
+                color: AppTheme.errorColor,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Sign Out',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: AppTheme.getTextColor(context),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          content: Text(
+            'Are you sure you want to sign out of your account?',
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: AppTheme.getTextColor(context, isDescription: true),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: AppTheme.getTextColor(context, isDescription: true),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).pop();
+                final auth = Provider.of<AuthProvider>(context, listen: false);
+                await auth.logout();
+                if (context.mounted) {
+                  Navigator.of(context).pushReplacementNamed('/');
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.errorColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Sign Out'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildAboutSection(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
@@ -291,7 +578,7 @@ class SettingsScreen extends StatelessWidget {
             _buildAboutItem(
               context,
               'App Name',
-              'عين الحياه',
+              'EyeCloud',
               Icons.apps,
             ),
             const SizedBox(height: 16),
@@ -307,6 +594,111 @@ class SettingsScreen extends StatelessWidget {
               'Build',
               '2025.1.0',
               Icons.build,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDliTestSection(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      decoration: AppTheme.getSurfaceDecoration(context),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    gradient: AppTheme.secondaryGradient,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.cloud,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Huawei DLI Test',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          color: AppTheme.getTextColor(context),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        'Run a quick API call to list databases',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: AppTheme.getTextColor(context, isDescription: true),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    try {
+                      final cfg = await ApiKeyLoaderDli.loadHuaweiDliConfig();
+                      if (cfg == null) {
+                        messenger.showSnackBar(const SnackBar(content: Text('DLI config missing')));
+                        return;
+                      }
+                      final service = HuaweiDliService(config: cfg);
+                      final res = await service.listDatabases();
+                      final text = 'DLI Status: ${res.statusCode}';
+                      messenger.showSnackBar(SnackBar(content: Text(text)));
+                    } catch (e) {
+                      messenger.showSnackBar(SnackBar(content: Text('Error: $e')));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  icon: const Icon(Icons.play_arrow, size: 18),
+                  label: const Text('Test DLI'),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    try {
+                      // SIS now uses backend service (secure) - no config needed in app
+                      messenger.showSnackBar(const SnackBar(
+                        content: Text('✅ SIS: Using secure backend API (http://10.0.2.2:3001)'),
+                        duration: Duration(seconds: 3),
+                        backgroundColor: Colors.green,
+                      ));
+                    } catch (e) {
+                      messenger.showSnackBar(SnackBar(content: Text('Error: $e')));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.errorColor,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  icon: const Icon(Icons.mic_external_on, size: 18),
+                  label: const Text('Test SIS'),
+                ),
+              ],
             ),
           ],
         ),
